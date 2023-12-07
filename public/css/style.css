@@ -1,0 +1,21 @@
+*{
+    font-family: Helvetica;
+}
+
+h1{
+    text-align: center;
+    color: white;
+    border: solid black;
+}
+
+.form{
+    width: 450px;
+    margin: 0% auto;
+}
+
+.controle{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: .5em;
+    font-weight: bold;
+}
