@@ -18,7 +18,7 @@ app.set('view engine', 'handlebars')
 //CADASTRAR LIVRO
 
 app.get('/postar', (req,res) => {
-    res.render('home')
+    res.render('postar')
 })
 
 app.post('/books/insertbooks',(req,res) => {
@@ -53,6 +53,26 @@ app.get('/books',(req,res) =>{
     
     res.render('books', { books })
   })
+})
+
+
+app.get('/books/:id', (req,res) => {
+
+  const id =req.params.id
+
+  const sql = `SELECT * FROM books WHERE id = ${id}`
+
+  conn.query(sql, function(err, data) {
+    if(err) {
+      console.log(err)
+      return
+    }
+    
+    const lista = data[0]
+
+    res.render('lista', { lista })
+  })
+
 })
 
 //ENTRAR NO MYSQL
