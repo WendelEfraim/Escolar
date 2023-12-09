@@ -1,6 +1,7 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
-const mysql = require('mysql')
+const pool = require('./db/conn')
+//const mysql = require('mysql')
 
 const app = express()
 
@@ -27,7 +28,7 @@ app.post('/books/insertbooks',(req,res) => {
 
   const sql = `INSERT INTO books (title, pageqty) VALUES ('${title}', '${pageqty}')`
   
-  conn.query(sql, function(err){
+  pool.query(sql, function(err){
     if(err) {
       console.log(err)
     }
@@ -41,7 +42,7 @@ app.post('/books/insertbooks',(req,res) => {
 app.get('/books',(req,res) =>{
   const sql = 'SELECT * FROM books'
 
-  conn.query(sql, function(err, data){
+  pool.query(sql, function(err, data){
 
     if(err) {
       console.log(err)
@@ -62,7 +63,7 @@ app.get('/books/:id', (req,res) => {
 
   const sql = `SELECT * FROM books WHERE id = ${id}`
 
-  conn.query(sql, function(err, data) {
+  pool.query(sql, function(err, data) {
     if(err) {
       console.log(err)
       return
@@ -74,23 +75,13 @@ app.get('/books/:id', (req,res) => {
   })
 
 })
+app.listen(3000)
 
 //ENTRAR NO MYSQL
 
-const conn = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'Escola'
-})
-
-conn.connect(function(err){
-
-  if(err) {
-    console.log(err)
-  }
-
-  console.log('Conectou ao MYSQL!')
-
-  app.listen(3000)
-})
+// const conn = mysql.createConnection({
+//   host: 'localhost',
+//   user: 'root',
+//   password: '',
+//   database: 'Escola'
+// })
