@@ -3,5 +3,9 @@
     <div class="container">
         <h1>{{lista.title}}</h1>
         <p>Este livro tem {{lista.pageqty}} pginas.</p>
+        <a href="/books/edit/{{lista.id}}">Editar</a>
     </div>    
+    <form action="/books/remove/{{lista.id}}" method="post">
+    <input type="submit" value="Remover">
+    </form>
 </div>
