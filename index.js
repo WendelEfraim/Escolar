@@ -26,9 +26,10 @@ app.post('/books/insertbooks',(req,res) => {
   const title = req.body.title
   const pageqty = req.body.pageqty
 
-  const sql = `INSERT INTO books (title, pageqty) VALUES ('${title}', '${pageqty}')`
-  
-  pool.query(sql, function(err){
+  const sql = "INSERT INTO books (??, ??) VALUES (?, ?)"
+  const dados = ['title','pageqty',title, pageqty]
+
+  pool.query(sql, dados, function (err) {
     if(err) {
       console.log(err)
     }
@@ -62,9 +63,10 @@ app.get('/books/:id', (req,res) => {
 
   const id = req.params.id
 
-  const sql = `SELECT * FROM books WHERE id = ${id}`
+  const sql = `SELECT * FROM books WHERE ?? = ?`
+  const dados = ['id', id]
 
-  pool.query(sql, function(err, data) {
+  pool.query(sql, dados, function(err, data) {
     if(err) {
       console.log(err)
       return
@@ -83,9 +85,10 @@ app.get('/books/edit/:id',(req,res) =>{
   
   const id = req.params.id 
 
-  const sql = `SELECT * FROM books WHERE id = ${id}`
+  const sql = `SELECT * FROM books WHERE ?? = ?`
+  const dados = ['id', id]
 
-  pool.query(sql, function(err, data){
+  pool.query(sql,dados, function(err, data){
     if(err){
       console.log(err)
       return
@@ -97,15 +100,15 @@ app.get('/books/edit/:id',(req,res) =>{
 })
 
 //POST
-
 app.post('/books/updatebook',(req,res) =>{
   const id = req.body.id
   const title = req.body.title
   const pageqty = req.body.pageqty
 
-  const sql = `UPDATE books SET title = '${title}', pageqty = '${pageqty}' WHERE id = ${id}`
+  const sql = `UPDATE books SET ?? = ?, ?? = ? WHERE ?? = ?`
+  const dados = ['title', title, 'pageqty', pageqty, 'id',id]
 
-  pool.query(sql, function(err){
+  pool.query(sql,dados, function(err){
     if(err){
       console.log(err)
       return
@@ -122,9 +125,10 @@ app.post('/books/remove/:id',(req,res) =>{
   
   const id = req.params.id 
 
-  const sql = `DELETE FROM books WHERE id = ${id}`
+  const sql = `DELETE FROM books WHERE ?? = ?`
+  const dados = ['id', id]
 
-  pool.query(sql, function(err){
+  pool.query(sql,dados, function(err){
     if(err){
       console.log(err)
       return
